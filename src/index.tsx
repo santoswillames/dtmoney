@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createServer, Model } from "miragejs";
 import { App } from "./App";
-import { transitions } from "polished";
 
 createServer({
   models: {
@@ -40,7 +39,11 @@ createServer({
 
     this.post("/transactions", (schema, request) => {
       const data = JSON.parse(request.requestBody);
-      return schema.create("transaction", data);
+      const newData = {
+        ...data,
+        createdAt: new Date(),
+      };
+      return schema.create("transaction", newData);
     });
   },
 });
